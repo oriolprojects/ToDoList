@@ -1,0 +1,70 @@
+@media screen and (max-width: 799px) {
+    
+
+    .button-margin{
+        margin-top: 5%;
+        margin-right: 2%;
+    }
+
+    input{
+        width: 100%;
+        height: 25%;
+        border-radius: 5px;
+        border: 1px solid #8f8f8f;
+        font-size: 1.5em;
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 5%;
+        min-width: 100%;
+    }
+
+    .login-pannel{
+        border-radius: 15px;
+    }
+    .button-row{
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 800px) {
+
+    .button-margin{
+        margin-top: 2%;
+        margin-right: 5%;
+    }
+
+    input{
+        width: 100%;
+        height: 25%;
+        border-radius: 5px;
+        font-size: 1.5em;
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 5%;
+        min-width: 110%;
+    }
+
+    .login-pannel{
+        border: 1px solid #8f8f8f;
+        border-radius: 15px;
+        padding: 5%;  
+        padding-right: 8%;
+    }
+
+    .button-row{
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-left: 10%;
+        margin-top:-20%;
+    }
+}
+
+  
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+
