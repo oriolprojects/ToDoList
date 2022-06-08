@@ -51,16 +51,20 @@ const ListItems = ({ arrayItems, emailUser, setArrayItems }) => {
         <Container className="container-listItems">
             <Stack>
                 {
-                    arrayItems.map((item, index) => {
-                        console.log(index)
-                        return (
-                            <div key={index}>
-                                <Item item={item} onDelete={onDelete} onEdit={onEdit} onToggle={onToggle}/>
-                            </div>
-                        )
-                    })
+                    arrayItems.length === 0 ?
+                        <p className="no-items">No items yet...</p>
+                    :
+                        arrayItems.map((item, index) => {
+                            return (
+                                <div key={index}>
+                                    <Item item={item} onDelete={onDelete} onEdit={onEdit} onToggle={onToggle}/>
+                                </div>
+                            )
+                        })
                 }
             </Stack>
+
+
         </Container>
     )
 }

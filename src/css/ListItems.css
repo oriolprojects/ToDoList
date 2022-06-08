@@ -85,7 +85,10 @@
     text-decoration: line-through;
 }
 
-
+.no-items{
+	font-family: 'Roboto', sans-serif;
+	font-size: large;
+}
 
 .myButton {
 	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);

@@ -4,11 +4,11 @@ import { auth, firestore } from './firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
 import AddItem from "./components/AddItem";
 import ListItems from "./components/ListItems";
-import { doc, getDoc, setDoc } from "firebase/firestore"
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 import "./css/main.css"
+import Button from "./components/Button";
 
 const Main = ({ emailUser }) => {
-  console.log(emailUser);
   const fakeData = [];
   const [arrayItems, setArrayItems] = useState(null);
 
@@ -48,6 +48,14 @@ const Main = ({ emailUser }) => {
     window.location.reload();
   }
 
+  const onClearList = () => {
+    // update the document on the database
+    const docuRef = doc(firestore, `users/${emailUser}`);
+    updateDoc(docuRef, {items: [...fakeData]});
+    // update the state        
+    setArrayItems(fakeData);
+}
+
 
   return (
     <div className="App">
@@ -59,7 +67,7 @@ const Main = ({ emailUser }) => {
         :
           null
       }
-      <button onClick={logout} className="logout-button">Logout</button>
+      <Button type="primary" onPress={onClearList} textButton="Clear List"/>
     </div>
   );
 }
