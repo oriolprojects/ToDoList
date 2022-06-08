@@ -1,5 +1,4 @@
 @media screen and (max-width: 799px) {
-    
 
     .button-margin{
         margin-top: 5%;
@@ -19,7 +18,9 @@
 
     .login-pannel{
         border-radius: 15px;
+        margin-top: 30%;
     }
+
     .button-row{
         align-items: center;
         display: flex;
@@ -49,6 +50,10 @@
         border-radius: 15px;
         padding: 5%;  
         padding-right: 8%;
+        margin-top: 10%;
+        box-shadow: inset;
+        box-shadow: 0px 32px 50px -7px #8f8e8e, 5px 5px 15px 5px rgba(0,0,0,0);
+        
     }
 
     .button-row{
