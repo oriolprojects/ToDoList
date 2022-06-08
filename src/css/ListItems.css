@@ -74,7 +74,8 @@
 	input{
         width: 80%!important;
         height: 25%;
-        border-radius: 5px;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
         font-size: 1.5em;
         font-family: 'Roboto', sans-serif;
 		min-width: 100%;

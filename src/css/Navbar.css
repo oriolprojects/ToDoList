@@ -1,0 +1,43 @@
+/* sidebar Nav */
+
+.navBar {
+  cursor: pointer;
+  position: relative;
+}
+
+.list{
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style: none;
+}
+
+.menuNav {
+  overflow-y: scroll;
+  text-decoration: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 0;
+  overflow: hidden;
+  max-width: 290px;
+  z-index: 9;
+}
+
+.menuNav.showMenu {
+  width: 100%;
+}
+
+a {
+  display: block;
+  padding: 10px 40px;
+  text-decoration: none;
+  color: #3fffd2;
+  text-transform: uppercase;
+  font-weight: bold;
+}
