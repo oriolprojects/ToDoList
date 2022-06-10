@@ -1,7 +1,7 @@
 import './css/App.css';
 import React from 'react';
-import Main from './Main';
-import Login from './Login';
+import Main from './components/Main';
+import Login from './components/Login';
 import {auth} from './firebase/firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
 

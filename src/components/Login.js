@@ -1,11 +1,11 @@
 import React from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { useState } from 'react';
-import { auth } from './firebase/firebaseConfig';
+import { auth } from '../firebase/firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './css/Login.css';
-import Button from './components/Button';
+import '../css/Login.css';
+import Button from './Button';
 
 
 
@@ -63,6 +63,7 @@ function Login() {
     await signOut(auth)
     window.location.reload();
   }
+  
   return (
     <div className='container'>
       <div className='row login-pannel'>
@@ -85,8 +86,8 @@ function Login() {
           />
         </div>
         <div className='button-row col-lg-12'>
-          <Button textButton="Login" type="primary" size="medium" onPress={login} ></Button>
-          <Button textButton="Sign Up" type="primary" size="medium" onPress={signUp} ></Button>
+          <Button textButton="Login" style="button-pannel" type="primary" size="medium" onPress={login} ></Button>
+          <Button textButton="Sign Up" style="button-pannel" type="primary" size="medium" onPress={signUp} ></Button>
         </div>
       </div>
       <div>

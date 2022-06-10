@@ -31,20 +31,6 @@ const ListItems = ({ arrayItems, emailUser, setArrayItems }) => {
         setArrayItems(newArrayItems);
     }
 
-    const onEdit = (id, text) => {
-        const newArrayItems = arrayItems.map(item => {
-            if (item.id === id) {
-                item.text = text;
-            }
-            return item;
-        }
-        );
-        const docuRef = doc(firestore, `users/${emailUser}`);
-        updateDoc(docuRef, {items: newArrayItems});
-        // update the state        
-        setArrayItems(newArrayItems);
-    }
-
 
 
     return (
@@ -57,7 +43,7 @@ const ListItems = ({ arrayItems, emailUser, setArrayItems }) => {
                         arrayItems.map((item, index) => {
                             return (
                                 <div key={index}>
-                                    <Item item={item} onDelete={onDelete} onEdit={onEdit} onToggle={onToggle}/>
+                                    <Item item={item} onDelete={onDelete} onToggle={onToggle}/>
                                 </div>
                             )
                         })

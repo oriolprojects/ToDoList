@@ -1,10 +1,10 @@
-import { Container, Row, Stack, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Button from "./Button";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import '../css/ListItems.css';
 import ButtonCheck from "./ButtonCheck";
 
-const Item = ({item, onDelete, onEdit, onToggle}) => {
+const Item = ({item, onDelete, onToggle}) => {
     const isDone = item.done ? "list-item done" : "list-item"
 
     return (
@@ -17,14 +17,7 @@ const Item = ({item, onDelete, onEdit, onToggle}) => {
                 }/>
             </Col>
             <Col>
-                <Button type="primary" size="icon" textButton={<AiFillEdit/>} onPress={
-                    () => {
-                        onEdit(item.id, item.text);
-                    }
-                }/>
-            </Col>
-            <Col>
-                <Button type="secondary" size="icon" textButton={<AiFillDelete/>} onPress={
+                <Button type="secondary" style="button-items" size="icon" textButton={<AiFillDelete/>} onPress={
                     () => {
                         onDelete(item.id);
                     }

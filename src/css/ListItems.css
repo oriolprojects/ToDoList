@@ -8,6 +8,15 @@
 		min-width: 150px;
 	}
 
+	.select-list-input{
+		min-width: 300px;
+		max-width: 350px;
+	}
+
+	.add-list-form{
+		margin-top: 5%;
+	}
+
 	.add-input{
 		padding:10px 20px;
 		font-size: 20px;
@@ -38,8 +47,31 @@
 		min-width: 50% !important;
     }
 
+	.add-list-container{
+		display: flex;
+		flex-direction: row;
+		max-height: 45px;
+		margin-bottom: 15%;
+	}
+
 	.container-listItems{
 		margin-top: 5% !important;
+	}
+
+	.myButton {
+		background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+		background-color:#79bbff;
+		border-top-right-radius:5px;
+		border-bottom-right-radius:5px;
+		border:1px solid #337bc4;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size:16px;
+		font-weight:bold;
+		padding:10px 20px;
+		text-decoration:none;
 	}
 }
 
@@ -51,6 +83,23 @@
 		display: flex;
 		min-width: 550px;
 	}
+
+	.select-list-input{
+		min-width: 500px;
+		max-width: 750px;
+	}
+
+	.add-list-form{
+		margin-top: 5%;
+	}
+
+	.add-list-container{
+		display: flex;
+		flex-direction: row;
+		max-height: 45px;
+		margin-bottom: 5%;
+	}
+
 
 	.add-input{
 		padding:10px 20px;
@@ -80,6 +129,23 @@
         font-family: 'Roboto', sans-serif;
 		min-width: 100%;
     }
+
+	.myButton {
+		background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+		background-color:#79bbff;
+		border-top-right-radius:5px;
+		border-bottom-right-radius:5px;
+		border:1px solid #337bc4;
+		display:inline-block;
+		cursor:pointer;
+		color:#ffffff;
+		font-family:Arial;
+		font-size:16px;
+		font-weight:bold;
+		padding:10px 20px;
+		text-decoration:none;
+		min-width: 150px;
+	}
 }
 
 .done{
@@ -91,21 +157,7 @@
 	font-size: large;
 }
 
-.myButton {
-	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
-	background-color:#79bbff;
-	border-top-right-radius:5px;
-	border-bottom-right-radius:5px;
-	border:1px solid #337bc4;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:20px;
-	font-weight:bold;
-	padding:10px 20px;
-	text-decoration:none;
-}
+
 .myButton:hover {
 	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
 	background-color:#378de5;
@@ -117,4 +169,17 @@
 
 .vstack{
 	padding-top: 5%;
+}
+
+.list-lists{
+	display: block;
+	margin-top: 5%;
+}
+
+.every-list{
+	padding: 5px;
+	cursor: pointer;
+}
+ul{
+	padding-inline-start: 0px!important;
 }

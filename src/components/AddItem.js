@@ -9,7 +9,7 @@ import { firestore } from "../firebase/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 
 
-const AddItem = ({ arrayItems, emailUser, setArrayItems }) => {
+const AddItem = ({ arrayItems, arrayLists, emailUser, setArrayItems, setArrayLists, listSelected }) => {
 
     async function addItem(e) {
         e.preventDefault();
@@ -27,37 +27,46 @@ const AddItem = ({ arrayItems, emailUser, setArrayItems }) => {
                 theme: "colored"
               });
             
-            } else {
-                // create new array of items
-                const newArrayItems = [...arrayItems, { id: + new Date(), text: text, done: false }];
-                // update the document
-                const docRef = doc(firestore, `users/${emailUser}`);
-                await updateDoc(docRef, { items: [...newArrayItems] });
-                // update the state
-                setArrayItems(newArrayItems);
-                // clean the input
-                e.target.addItem.value = "";
+            } 
+        else {
+            // create new array of items
+            const newList = [];
 
-                toast.success("Item added successfully", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored"
-                });
-
-            }
-            
+            arrayLists.map(list => {
+                if (list.id === listSelected.id) {
+                    const currentList = {id: list.id, title: list.title, items: [...list.items, {id: Date.now(), text: text, done: false}]};
+                    newList.push(currentList);
+                } else{
+                    newList.push(list);
+                }
+            });
+            // update the document on the database
+            const docuRef = doc(firestore, `users/${emailUser}`);
+            updateDoc(docuRef, {lists: newList});
+            // update the state
+            setArrayItems(arrayItems => [...arrayItems, {id: Date.now(), text: text, done: false}]);
+            setArrayLists(newList);
+            console.log(newList);
+            // clear the input
+            e.target.addItem.value = "";
+            toast.success("Item added successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
+        }
     }
 
     return (
         <Container>
             <Form onSubmit={addItem}>
                 <Row>
-                    <Col>
+                    <Col className="add-list-container">
                         <Form.Control className="add-input" type="text" id="addItem" placeholder="Add item..." />
                         <Button type="submit" className="myButton">Add</Button>
                     </Col>
