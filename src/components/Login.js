@@ -2,7 +2,8 @@ import React from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../firebase/firebaseConfig';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { error, success } from "./Toast";
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/Login.css';
 import Button from './Button';
@@ -27,16 +28,7 @@ function Login() {
       setUser(user);
     } catch (error) {
       console.log(error);
-      toast.error("Add email and password to Register", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored"
-      });
+      error("Add email and password to Register")
     }
   }
   
@@ -46,16 +38,7 @@ function Login() {
       setUser(user);
     } catch (error) {
       console.log(error);
-      toast.error("Invalid email or password", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored"
-      });
+      error("Invalid email or password")
     }
   }
 

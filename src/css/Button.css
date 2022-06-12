@@ -1,16 +1,24 @@
 .button-items{
+    position:relative;
     margin-top: 32%;
     margin-right: 5%;
+    z-index: 1;
 }
 
 .button-pannel{
+    position:relative;
     margin-top: 10%;
+    z-index: 1;
 }
 
 .button-pannel{
+    position:relative;
     margin : 25% 5% 5% 0%;
+    z-index: 1;
 }
 
 .button-clear-list{
+    position:relative;
     margin : 5% 5% 5% 0%;
+    z-index: 1;
 }

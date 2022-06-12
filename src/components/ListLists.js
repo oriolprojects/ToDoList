@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Stack, Row, Col, Button, Form } from "react-bootstrap";
 import '../css/ListItems.css';
 import Item from "./Item";
@@ -6,28 +6,38 @@ import { updateDoc, doc } from "firebase/firestore";
 import { firestore } from "../firebase/firebaseConfig";
 import Select from 'react-select'
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { error, success } from "./Toast";
 
 
-const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayLists, listSelected, setListSelected, newListToggle, setNewListToggle }) => {
 
+const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayLists, listSelected, setListSelected, newListToggle, setNewListToggle, isCollaborative, setIsCollaborative, searchDocuments }) => {
 
-    const options = arrayLists.map(list => {
+    var options = arrayLists.map(list => {
         return {
             value: list.id,
-            label: list.title
+            label: list.title,
+            isCollaborative: list.email? true : false
         }}
     );
-
 
     const onDeleteItem = (id) => {
         // crete new array of items without the one to delete
         const newList = [];
+        const secondaryList = [];
+        var email = null
+
         arrayLists.map(list => {
             if (list.id === listSelected.id) {
-                const currentList = {id: list.id, title: list.title, items: list.items.filter(item => item.id !== id)};
-                newList.push(currentList);  
+                if (isCollaborative){
+                    email = list.email
+                    const currentList = {id: list.id, title: list.title, email: list.email, items: list.items.filter(item => item.id !== id)};
+                    newList.push(currentList); 
+                } else{
+                    const currentList = {id: list.id, title: list.title, items: list.items.filter(item => item.id !== id)};
+                    newList.push(currentList);
+                }
             } else{
                 newList.push(list);
             }
@@ -36,6 +46,24 @@ const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayL
         // update the document on the database
         const docuRef = doc(firestore, `users/${emailUser}`);
         updateDoc(docuRef, {lists: newList});
+
+        if(isCollaborative) {
+            searchDocuments(email).then(data => {
+                data.map(list => {
+                    if (list.id === listSelected.id) {
+                        const currentList = {id: list.id, title: list.title, email: list.email, items: list.items.filter(item => item.id !== id)}
+                        secondaryList.push(currentList);
+                    } else{
+                        secondaryList.push(list);
+                    }
+                });
+
+                const docuRef = doc(firestore, `users/${email}`);
+                updateDoc(docuRef, {lists: secondaryList});
+            })
+        }
+
+
         // update the state
         setArrayItems(arrayItems => arrayItems.filter(item => item.id !== id));
         setArrayLists(newList);
@@ -43,25 +71,70 @@ const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayL
 
     const onToggle = (id) => {
         const newList = [];
+        const secondaryList = [];
+
+        var email = null
         arrayLists.map(list => {
             if (list.id === listSelected.id) {
-                const currentList = {id: list.id, title: list.title, items: list.items.map(item => {
-                    if (item.id === id) {
-                        return {id: item.id, text: item.text, done: !item.done}
-                    } else {
-                        return item
+                if (isCollaborative) {
+                    const currentList = {id: list.id, title: list.title, email: list.email, items: list.items.map(item => {
+                        email = list.email
+                        if (item.id === id) {
+                            return {id: item.id, text: item.text, done: item.done ? false : true}
+                        } else {
+                            return item
+                        }
                     }
+                    )};
+                    
+                    setArrayItems(currentList.items);
+                    newList.push(currentList);
+                } else{
+                    const currentList = {id: list.id, title: list.title, items: list.items.map(item => {
+                        if (item.id === id) {
+                            return {id: item.id, text: item.text, done: item.done ? false : true}
+                        } else {
+                            return item
+                        }
+                    }
+                    )};
+                    
+                    setArrayItems(currentList.items);
+                    newList.push(currentList);
                 }
-                )};
-                setArrayItems(currentList.items);
-                newList.push(currentList);
+                
             } else{
                 newList.push(list);
             }
         });
-
+        
         const docuRef = doc(firestore, `users/${emailUser}`);
         updateDoc(docuRef, {lists: newList});
+
+        if(isCollaborative) {
+
+            searchDocuments(email).then(data => {
+                data.map(list => {
+                    if (list.id === listSelected.id) {
+                        const currentList = {id: list.id, title: list.title, email: list.email, items: list.items.map(item => {
+                            if (item.id === id) {
+                                return {id: item.id, text: item.text, done: item.done ? false : true}
+                            } else {
+                                return item
+                            }
+                        }
+                        )};
+                        secondaryList.push(currentList);
+                    } else{
+                        secondaryList.push(list);
+                    }
+                });
+
+                const docuRef = doc(firestore, `users/${email}`);
+                updateDoc(docuRef, {lists: secondaryList});
+            })
+        }
+
         // update the state
         setArrayLists(newList);
     }
@@ -74,6 +147,7 @@ const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayL
                 setArrayItems(list.items);
             }
         });
+        
 
         if (id === 0) {
             setNewListToggle(true);
@@ -84,11 +158,13 @@ const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayL
 
     const handleSelectChange = (e) => {
         onToggleList(e.value);
+        setIsCollaborative(e.isCollaborative);
     }
 
     var defaultValue = {
         value: 0,
-        label: "Select a list..."
+        label: "Select a list...",
+        isCollaborative: false
     }
 
     return (
@@ -109,15 +185,7 @@ const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayL
                                             const docuRef = doc(firestore, `users/${emailUser}`);
                                             updateDoc(docuRef, {lists: [...arrayLists, newList]});
                                             setArrayLists([...arrayLists, newList]);
-                                            toast.success("List added successfully", {
-                                                position: "top-right",
-                                                autoClose: 3000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                                });
+                                            success("List added successfully");
                                         }}>
                                     <Row>
                                         <Col className="add-list-container">
@@ -128,10 +196,23 @@ const ListLists = ({ arrayLists, arrayItems, emailUser, setArrayItems, setArrayL
                                 </Form>
                             </Container>
                             <Container className="list-lists" >
+                                <h2>Lists</h2>
                                 <ul>
                                     {
                                         arrayLists.map(list => {
-                                            if (list.id !== 0) {
+                                            if ((list.id !== 0) && (!list.email)) {
+                                                return (
+                                                    <div className="every-list" key={list.id} onClick={() => onToggleList(list.id)}>{list.title}</div>
+                                                )
+                                            }
+                                        })
+                                    }
+                                </ul>
+                                <h2>Collaborative Lists</h2>
+                                <ul>
+                                    {
+                                        arrayLists.map(list => {
+                                            if ((list.id !== 0) && (list.email)) {
                                                 return (
                                                     <div className="every-list" key={list.id} onClick={() => onToggleList(list.id)}>{list.title}</div>
                                                 )

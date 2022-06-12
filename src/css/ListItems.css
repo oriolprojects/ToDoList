@@ -1,3 +1,7 @@
+.select-list-input{
+	position:relative;
+	z-index: 2;
+}
 
 @media screen and (max-width: 799px) {
 	.list-item{
@@ -107,8 +111,9 @@
 		border:1px solid #8f8f8f;
 		border-top-left-radius:5px;
 		border-bottom-left-radius:5px;
-		min-width: 500px;
+		min-width: 50%;
 	}
+	
 	.item-text{
 		margin-top: 2%;
 		padding: 10px 50px;
